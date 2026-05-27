@@ -1,0 +1,24 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Student {
+  id          Int      @id @default(autoincrement())
+  name        String
+  email       String   @unique
+  age         Int
+  enrolled_at DateTime @default(now())
+  phone       String?  // Question mark (?) ka matlab hai yeh NULL ho sakta hai
+
+  @@map("students") // Isse Prisma database mein exact "students" naam ka table hi target karega
+}
