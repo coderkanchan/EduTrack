@@ -1,13 +1,11 @@
 import { Request, Response, NextFunction } from 'express';
 import prisma from '../config/prisma.js';
 
-
 // 1. CREATE NEW STUDENT WITH COURSES
 export const createStudent = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
     const { name, email, age, phone, courses } = req.body;
 
-    // Prisma transactional write karega: Student aur uske Courses ek sath save honge
     const newStudent = await prisma.student.create({
       data: {
         name,
