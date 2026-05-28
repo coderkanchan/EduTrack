@@ -73,13 +73,10 @@ export const updateStudent = async (req: Request, res: Response, next: NextFunct
   }
 };
 
-// 4. Delete Student (DELETE)
-// 4. DELETE STUDENT (AND AUTOMATICALLY CASCADE DELETE THEIR COURSES)
 export const deleteStudent = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
     const { id } = req.params;
 
-    // Check karein ki student exist karta bhi hai ya nahi
     const studentExists = await prisma.student.findUnique({
       where: { id: Number(id) }
     });
@@ -89,7 +86,6 @@ export const deleteStudent = async (req: Request, res: Response, next: NextFunct
       return;
     }
 
-    // Student ko delete karenge, iske saare courses auto-delete ho jayenge background mein
     await prisma.student.delete({
       where: { id: Number(id) }
     });
