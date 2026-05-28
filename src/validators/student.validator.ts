@@ -2,17 +2,18 @@ import { z } from 'zod';
 
 export const createStudentSchema = z.object({
   body: z.object({
-    name: z.string({
-      required_error: "Name is required",
-    }).min(2, "Name must be at least 2 characters long"),
+    name: z.string().min(2, "Name must be at least 2 characters long"),
 
-    email: z.string({
-      required_error: "Email is required",
-    }).email("Invalid email format"),
+    email: z.string().email("Invalid email format"),
 
     age: z.number({
-      required_error: "Age is required",
-    }).min(15, "Age must be at least 15").max(100, "Age cannot exceed 100"),
+      errorMap: (issue, ctx) => {
+        if (issue.code === 'invalid_type') return { message: "Age must be a number" };
+        if (issue.code === 'too_small') return { message: "Age must be at least 15" };
+        if (issue.code === 'too_big') return { message: "Age cannot exceed 100" };
+        return { message: ctx.defaultError };
+      }
+    }).min(15).max(100),
 
     phone: z.string().optional(),
 

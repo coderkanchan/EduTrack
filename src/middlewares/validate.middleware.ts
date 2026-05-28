@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { ZodError, ZodSchema } from 'zod'; 
+import { ZodError, ZodSchema, ZodIssue } from 'zod'; 
 
 export const validate = (schema: ZodSchema) =>
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -10,10 +10,10 @@ export const validate = (schema: ZodSchema) =>
         params: req.params,
       });
 
-      next(); 
+      next();
     } catch (error) {
       if (error instanceof ZodError) {
-        const errorMessages = error.errors.map((err) => ({
+        const errorMessages = error.issues.map((err: ZodIssue) => ({
           field: err.path[1] || err.path[0] || "unknown",
           message: err.message,
         }));
