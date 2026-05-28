@@ -4,12 +4,12 @@
 // Get a free hosted Postgres database in seconds: `npx create-db`
 
 generator client {
-  provider      = "prisma-client-js"
-  engineType    = "binary"
+  provider = "prisma-client-js"
 }
 
 datasource db {
   provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model Student {
@@ -18,7 +18,7 @@ model Student {
   email       String   @unique
   age         Int
   enrolled_at DateTime @default(now())
-  phone       String?  // Question mark (?) this means it can be NULL 
+  phone       String?
 
-  @@map("students") // Isse Prisma database mein exact "students" naam ka table hi target karega
+  @@map("students")
 }
