@@ -15,9 +15,8 @@ export const createStudentSchema = z.object({
       required_error: "Age is required",
     }).min(15, "Age must be at least 15").max(100, "Age cannot exceed 100"),
 
-    phone: z.string().optional(), // Yeh optional hai, nahi bhi bhejenge toh chalega
+    phone: z.string().optional(), 
 
-    // Relational data (courses) ka validation
     courses: z.array(
       z.object({
         title: z.string().min(3, "Course title must be at least 3 characters"),
