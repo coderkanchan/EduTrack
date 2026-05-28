@@ -6,7 +6,6 @@ const app = express();
 
 app.use(express.json());
 
-// Routes Mounting
 app.use('/api/students', studentRoutes);
 
 app.use(errorHandler);
