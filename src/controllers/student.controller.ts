@@ -30,7 +30,6 @@ export const createStudent = async (req: Request, res: Response, next: NextFunct
   }
 };
 
-// 2. GET ALL STUDENTS WITH THEIR COURSES
 export const getAllStudents = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
     const students = await prisma.student.findMany({
@@ -51,7 +50,6 @@ export const getAllStudents = async (req: Request, res: Response, next: NextFunc
   }
 };
 
-// 3. Update Student Data (UPDATE)
 export const updateStudent = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { id } = req.params;
