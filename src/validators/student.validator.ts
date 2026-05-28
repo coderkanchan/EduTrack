@@ -14,7 +14,7 @@ export const createStudentSchema = z.object({
       required_error: "Age is required",
     }).min(15, "Age must be at least 15").max(100, "Age cannot exceed 100"),
 
-    phone: z.string().optional(), 
+    phone: z.string().optional(),
 
     courses: z.array(
       z.object({
@@ -22,6 +22,6 @@ export const createStudentSchema = z.object({
         description: z.string().optional(),
         credits: z.number().min(1, "Credits must be at least 1"),
       })
-    ).min(1, "At least one course must be provided") 
+    ).min(1, "At least one course must be provided")
   })
 });
