@@ -1,34 +1,57 @@
 import { Request, Response, NextFunction } from 'express';
-import prisma from '../config/prisma.js'; 
+import prisma from '../config/prisma.js';
 
-// 1. Get All Students (READ)
-export const getAllStudents = async (req: Request, res: Response, next: NextFunction) => {
+
+// 1. CREATE NEW STUDENT WITH COURSES
+export const createStudent = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
-    const students = await prisma.student.findMany({
-      orderBy: { id: 'asc' }
+    const { name, email, age, phone, courses } = req.body;
+
+    // Prisma transactional write karega: Student aur uske Courses ek sath save honge
+    const newStudent = await prisma.student.create({
+      data: {
+        name,
+        email,
+        age: Number(age),
+        phone,
+        // Yahan hum relation 'connect' ya 'create' karte hain
+        courses: {
+          create: courses // Agar req.body mein courses ka array aayega toh auto-insert ho jayega
+        }
+      },
+      include: {
+        courses: true // Response mein naye student ke sath uske courses bhi dikhenge
+      }
     });
-    res.json(students);
-  } catch (err) {
-    next(err);
+
+    res.status(201).json({
+      success: true,
+      message: "Student and enrolled courses created successfully!",
+      data: newStudent
+    });
+  } catch (error) {
+    next(error);
   }
 };
 
-// 2. Create New Student (CREATE)
-export const createStudent = async (req: Request, res: Response, next: NextFunction) => {
+// 2. GET ALL STUDENTS WITH THEIR COURSES
+export const getAllStudents = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
-    const { name, email, age } = req.body;
-
-    if (!name || !email || !age) {
-      return res.status(400).json({ error: 'Please provide name, email, and age' });
-    }
-
-    const newStudent = await prisma.student.create({
-      data: { name, email, age: Number(age) }
+    const students = await prisma.student.findMany({
+      include: {
+        courses: true // Yeh line har student ke data ke andar uske courses ka array jod degi!
+      },
+      orderBy: {
+        id: 'asc'
+      }
     });
 
-    res.status(201).json(newStudent);
-  } catch (err) {
-    next(err);
+    res.status(200).json({
+      success: true,
+      data: students
+    });
+  } catch (error) {
+    next(error);
   }
 };
 
