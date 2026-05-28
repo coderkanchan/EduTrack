@@ -20,5 +20,19 @@ model Student {
   enrolled_at DateTime @default(now())
   phone       String?
 
+  courses     Course[]
+
   @@map("students")
+}
+
+model Course {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String?
+  credits     Int
+
+  studentId   Int
+  student     Student  @relation(fields: [studentId], references: [id], onDelete: Cascade)
+
+  @@map("courses")
 }
