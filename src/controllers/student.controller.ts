@@ -99,7 +99,6 @@ export const deleteStudent = async (req: Request, res: Response, next: NextFunct
   }
 };
 
-// 3. GET SINGLE STUDENT PROFILE WITH DETAILED STATS
 export const getStudentProfileWithStats = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
     const { id } = req.params;
