@@ -1,7 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import prisma from '../config/prisma.js';
 
-// 1. CREATE NEW STUDENT WITH COURSES
 export const createStudent = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
     const { name, email, age, phone, courses } = req.body;
@@ -13,11 +12,11 @@ export const createStudent = async (req: Request, res: Response, next: NextFunct
         age: Number(age),
         phone,
         courses: {
-          create: courses 
+          create: courses
         }
       },
       include: {
-        courses: true 
+        courses: true
       }
     });
 
@@ -36,7 +35,7 @@ export const getAllStudents = async (req: Request, res: Response, next: NextFunc
   try {
     const students = await prisma.student.findMany({
       include: {
-        courses: true 
+        courses: true
       },
       orderBy: {
         id: 'asc'
@@ -86,5 +85,45 @@ export const deleteStudent = async (req: Request, res: Response, next: NextFunct
     res.json({ message: 'Student deleted successfully via Prisma!' });
   } catch (err) {
     next(err);
+  }
+};
+
+// 3. GET SINGLE STUDENT PROFILE WITH DETAILED STATS
+export const getStudentProfileWithStats = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  try {
+    const { id } = req.params;
+
+    const student = await prisma.student.findUnique({
+      where: { id: Number(id) },
+      include: {
+        courses: true
+      }
+    });
+
+    if (!student) {
+      res.status(404).json({ success: false, message: "Student not found" });
+      return;
+    }
+
+    const stats = await prisma.course.aggregate({
+      where: { studentId: Number(id) },
+      _sum: {
+        credits: true 
+      },
+      _count: {
+        id: true 
+      }
+    });
+
+    res.status(200).json({
+      success: true,
+      data: {
+        profile: student,
+        totalCourses: stats._count.id,
+        totalCredits: stats._sum.credits || 0
+      }
+    });
+  } catch (error) {
+    next(error);
   }
 };
