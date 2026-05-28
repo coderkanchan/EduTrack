@@ -74,17 +74,32 @@ export const updateStudent = async (req: Request, res: Response, next: NextFunct
 };
 
 // 4. Delete Student (DELETE)
-export const deleteStudent = async (req: Request, res: Response, next: NextFunction) => {
+// 4. DELETE STUDENT (AND AUTOMATICALLY CASCADE DELETE THEIR COURSES)
+export const deleteStudent = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
     const { id } = req.params;
 
+    // Check karein ki student exist karta bhi hai ya nahi
+    const studentExists = await prisma.student.findUnique({
+      where: { id: Number(id) }
+    });
+
+    if (!studentExists) {
+      res.status(404).json({ success: false, message: "Student not found" });
+      return;
+    }
+
+    // Student ko delete karenge, iske saare courses auto-delete ho jayenge background mein
     await prisma.student.delete({
       where: { id: Number(id) }
     });
 
-    res.json({ message: 'Student deleted successfully via Prisma!' });
-  } catch (err) {
-    next(err);
+    res.status(200).json({
+      success: true,
+      message: "Student and all their associated courses deleted successfully!"
+    });
+  } catch (error) {
+    next(error);
   }
 };
 
@@ -108,10 +123,10 @@ export const getStudentProfileWithStats = async (req: Request, res: Response, ne
     const stats = await prisma.course.aggregate({
       where: { studentId: Number(id) },
       _sum: {
-        credits: true 
+        credits: true
       },
       _count: {
-        id: true 
+        id: true
       }
     });
 
