@@ -14,13 +14,12 @@ export const createStudent = async (req: Request, res: Response, next: NextFunct
         email,
         age: Number(age),
         phone,
-        // Yahan hum relation 'connect' ya 'create' karte hain
         courses: {
-          create: courses // Agar req.body mein courses ka array aayega toh auto-insert ho jayega
+          create: courses 
         }
       },
       include: {
-        courses: true // Response mein naye student ke sath uske courses bhi dikhenge
+        courses: true 
       }
     });
 
@@ -39,7 +38,7 @@ export const getAllStudents = async (req: Request, res: Response, next: NextFunc
   try {
     const students = await prisma.student.findMany({
       include: {
-        courses: true // Yeh line har student ke data ke andar uske courses ka array jod degi!
+        courses: true 
       },
       orderBy: {
         id: 'asc'
