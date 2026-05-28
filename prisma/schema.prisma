@@ -18,7 +18,7 @@ model Student {
   email       String   @unique
   age         Int
   enrolled_at DateTime @default(now())
-  phone       String?  // Question mark (?) ka matlab hai yeh NULL ho sakta hai
+  phone       String?  // Question mark (?) this means it can be NULL 
 
   @@map("students") // Isse Prisma database mein exact "students" naam ka table hi target karega
 }
