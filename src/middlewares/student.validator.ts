@@ -1,6 +1,5 @@
 import { z } from 'zod';
 
-// Hum ek Zod Schema taiyar kar rahe hain jo hamare rules define karega
 export const createStudentSchema = z.object({
   body: z.object({
     name: z.string({
@@ -23,6 +22,6 @@ export const createStudentSchema = z.object({
         description: z.string().optional(),
         credits: z.number().min(1, "Credits must be at least 1"),
       })
-    ).min(1, "At least one course must be provided") // Kam se kam 1 course enroll hona chahiye
+    ).min(1, "At least one course must be provided") 
   })
 });
