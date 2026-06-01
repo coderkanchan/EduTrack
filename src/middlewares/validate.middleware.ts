@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
-import { ZodError, ZodSchema, ZodIssue } from 'zod'; 
+import { ZodError, ZodSchema } from 'zod';
 
-export const validate = (schema: ZodSchema) =>
+export const validate = (schema: ZodSchema) => 
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       await schema.parseAsync({
@@ -9,14 +9,17 @@ export const validate = (schema: ZodSchema) =>
         query: req.query,
         params: req.params,
       });
-
+      
       next();
     } catch (error) {
       if (error instanceof ZodError) {
-        const errorMessages = error.issues.map((err: ZodIssue) => ({
-          field: err.path[1] || err.path[0] || "unknown",
-          message: err.message,
-        }));
+        // ZodError se issues nikal kar safely structure map karte hain
+        const errorMessages = error.issues.map((err) => {
+          return {
+            field: err.path[1] || err.path[0] || "unknown",
+            message: err.message,
+          };
+        });
 
         res.status(400).json({
           success: false,
