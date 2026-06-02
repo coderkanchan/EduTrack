@@ -13,6 +13,7 @@ export const validate = (schema: ZodSchema) =>
       next();
     } catch (error) {
       if (error instanceof ZodError) {
+        
         const errorMessages = error.issues.map((err) => {
           return {
             field: err.path[1] || err.path[0] || "unknown",
