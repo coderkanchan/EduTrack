@@ -1,6 +1,5 @@
 import { z } from 'zod';
 
-// Hum pure request schema ko z.object se wrap kar rahe hain
 export const createStudentSchema = z.object({
   body: z.object({
     name: z.string({
