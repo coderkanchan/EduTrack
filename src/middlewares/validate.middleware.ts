@@ -13,7 +13,6 @@ export const validate = (schema: ZodSchema) =>
       next();
     } catch (error) {
       if (error instanceof ZodError) {
-        // ZodError se issues nikal kar safely structure map karte hain
         const errorMessages = error.issues.map((err) => {
           return {
             field: err.path[1] || err.path[0] || "unknown",
