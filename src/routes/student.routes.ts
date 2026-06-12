@@ -12,6 +12,7 @@ router.get('/', getAllStudents);
 router.post('/', createStudent);
 
 router.put('/:id', updateStudent);
+
 router.delete('/:id', deleteStudent);
 
 router.get('/:id/stats', getStudentProfileWithStats);
