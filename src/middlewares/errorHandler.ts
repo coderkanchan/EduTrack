@@ -6,7 +6,6 @@ export const errorHandler = (
   res: Response,
   next: NextFunction
 ) => {
-  
   console.error('💥 Central Error Logged:', err.message);
 
   if (err.code === '23505') {
