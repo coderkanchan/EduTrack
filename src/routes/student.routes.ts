@@ -8,6 +8,7 @@ const router = Router();
 router.post('/', validate(createStudentSchema), createStudent);
 
 router.get('/', getAllStudents);
+
 router.post('/', createStudent);
 
 router.put('/:id', updateStudent);
