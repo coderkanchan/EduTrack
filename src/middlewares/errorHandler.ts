@@ -7,7 +7,6 @@ export const errorHandler = (
   next: NextFunction
 ) => {
   console.error('💥 Central Error Logged:', err.message);
-
   if (err.code === '23505') {
     return res.status(400).json({ error: 'Email already exists!' });
   }
