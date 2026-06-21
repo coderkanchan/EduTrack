@@ -4,7 +4,6 @@ import prisma from '../config/prisma.js';
 export const createStudent = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
     const { name, email, age, phone, courses } = req.body;
-
     const newStudent = await prisma.student.create({
       data: {
         name,
@@ -101,7 +100,6 @@ export const getStudentProfileWithStats = async (req: Request, res: Response, ne
   
   try {
     const { id } = req.params;
-
     const student = await prisma.student.findUnique({
       where: { id: Number(id) },
       include: {
