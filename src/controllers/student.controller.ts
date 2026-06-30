@@ -28,6 +28,7 @@ export const createStudent = async (req: Request, res: Response, next: NextFunct
   } catch (error) {
     next(error);
   }
+  
 };
 
 export const getAllStudents = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
