@@ -18,7 +18,6 @@ export const createStudent = async (req: Request, res: Response, next: NextFunct
         courses: true
       }
     });
-
     res.status(201).json({
       success: true,
       message: "Student and enrolled courses created successfully!",
