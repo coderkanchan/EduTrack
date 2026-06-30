@@ -2,7 +2,6 @@ import { Request, Response, NextFunction } from 'express';
 import prisma from '../config/prisma.js';
 
 export const createStudent = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-  
   try {
     const { name, email, age, phone, courses } = req.body;
     const newStudent = await prisma.student.create({
@@ -28,7 +27,6 @@ export const createStudent = async (req: Request, res: Response, next: NextFunct
   } catch (error) {
     next(error);
   }
-  
 };
 
 export const getAllStudents = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
