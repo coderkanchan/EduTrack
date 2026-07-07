@@ -23,6 +23,7 @@ export const createStudent = async (req: Request, res: Response, next: NextFunct
       message: "Student and enrolled courses created successfully!",
       data: newStudent
     });
+
   } catch (error) {
     next(error);
   }
