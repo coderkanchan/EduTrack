@@ -117,7 +117,7 @@ export const getStudentProfileWithStats = async (req: Request, res: Response, ne
         id: true
       }
     });
-    
+
     res.status(200).json({
       success: true,
       data: {
@@ -126,6 +126,7 @@ export const getStudentProfileWithStats = async (req: Request, res: Response, ne
         totalCredits: stats._sum.credits || 0
       }
     });
+    
   } catch (error) {
     next(error);
   }
