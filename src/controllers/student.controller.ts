@@ -104,6 +104,7 @@ export const getStudentProfileWithStats = async (req: Request, res: Response, ne
         courses: true
       }
     });
+    
     if (!student) {
       res.status(404).json({ success: false, message: "Student not found" });
       return;
@@ -126,7 +127,7 @@ export const getStudentProfileWithStats = async (req: Request, res: Response, ne
         totalCredits: stats._sum.credits || 0
       }
     });
-    
+
   } catch (error) {
     next(error);
   }
