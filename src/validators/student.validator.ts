@@ -24,5 +24,6 @@ export const createStudentSchema = z.object({
         credits: z.number().min(1, "Credits must be at least 1"),
       })
     ).min(1, "At least one course must be provided"),
+    
   }),
 });
