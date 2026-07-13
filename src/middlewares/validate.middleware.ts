@@ -25,6 +25,7 @@ export const validate = (schema: ZodSchema) =>
           success: false,
           errors: errorMessages,
         });
+        
         return;
       }
       next(error);
