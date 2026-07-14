@@ -28,6 +28,7 @@ export const createStudent = async (req: Request, res: Response, next: NextFunct
   }
 };
 
+// 2. GET ALL STUDENTS (WITH SEARCH, PAGINATION & SORTING)
 export const getAllStudents = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
     const { search, page = '1', limit = '10', sortBy = 'enrolled_at', sortOrder = 'desc' } = req.query;
@@ -38,12 +39,16 @@ export const getAllStudents = async (req: Request, res: Response, next: NextFunc
 
     const whereCondition = search
       ? {
-        OR: [
-          { name: { contains: String(search), mode: 'insensitive' as const } },
-          { email: { contains: String(search), mode: 'insensitive' as const } },
-        ],
-      }
+          OR: [
+            { name: { contains: String(search), mode: 'insensitive' as const } },
+            { email: { contains: String(search), mode: 'insensitive' as const } },
+          ],
+        }
       : {};
+
+    // Strict dynamic sorting object creation
+    const validSortFields = ['name', 'age', 'enrolled_at'];
+    const sortField = validSortFields.includes(String(sortBy)) ? String(sortBy) : 'enrolled_at';
 
     const [students, totalCount] = await Promise.all([
       prisma.student.findMany({
@@ -52,7 +57,7 @@ export const getAllStudents = async (req: Request, res: Response, next: NextFunc
         skip: skip,
         take: limitNum,
         orderBy: {
-          [String(sortBy)]: sortOrder,
+          [sortField]: sortOrder as 'asc' | 'desc', // Safely casting key and value
         },
       }),
       prisma.student.count({ where: whereCondition }),
