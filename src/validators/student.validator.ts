@@ -24,3 +24,13 @@ export const createStudentSchema = z.object({
     ).min(1, "At least one course must be provided"),
   }),
 });
+
+export const getStudentsQuerySchema = z.object({
+  query: z.object({
+    search: z.string().optional(),
+    page: z.string().optional(),
+    limit: z.string().optional(),
+    sortBy: z.enum(['name', 'age', 'enrolled_at']).optional(),
+    sortOrder: z.enum(['asc', 'desc']).optional(),
+  }),
+});
