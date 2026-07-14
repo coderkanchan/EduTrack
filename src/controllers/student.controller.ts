@@ -28,20 +28,51 @@ export const createStudent = async (req: Request, res: Response, next: NextFunct
   }
 };
 
-export const getAllStudents = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+// 2. GET ALL STUDENTS (WITH SEARCH, PAGINATION & SORTING)
+export const getStudents = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
-    const students = await prisma.student.findMany({
-      include: {
-        courses: true
-      },
-      orderBy: {
-        id: 'asc'
+    // Query params se values nikalenge
+    const { search, page = '1', limit = '10', sortBy = 'enrolled_at', sortOrder = 'desc' } = req.query;
+
+    const pageNum = Number(page);
+    const limitNum = Number(limit);
+    const skip = (pageNum - 1) * limitNum; // PostgreSQL offset calculate karne ke liye formula
+
+    // Dynamic Filter condition banayenge search ke liye
+    const whereCondition = search
+      ? {
+        OR: [
+          { name: { contains: String(search), mode: 'insensitive' as const } }, // PostgreSQL ILIKE
+          { email: { contains: String(search), mode: 'insensitive' as const } },
+        ],
       }
-    });
+      : {};
+
+    // Do queries ek sath parallelly run karenge Performance badhane ke liye
+    const [students, totalCount] = await Promise.all([
+      prisma.student.findMany({
+        where: whereCondition,
+        include: { courses: true },
+        skip: skip, // PostgreSQL OFFSET
+        take: limitNum, // PostgreSQL LIMIT
+        orderBy: {
+          [String(sortBy)]: sortOrder,
+        },
+      }),
+      prisma.student.count({ where: whereCondition }), 
+    ]);
+
+    const totalPages = Math.ceil(totalCount / limitNum);
 
     res.status(200).json({
       success: true,
-      data: students
+      meta: {
+        totalRecords: totalCount,
+        currentPage: pageNum,
+        totalPages: totalPages,
+        limit: limitNum,
+      },
+      data: students,
     });
   } catch (error) {
     next(error);
@@ -104,7 +135,7 @@ export const getStudentProfileWithStats = async (req: Request, res: Response, ne
         courses: true
       }
     });
-    
+
     if (!student) {
       res.status(404).json({ success: false, message: "Student not found" });
       return;
