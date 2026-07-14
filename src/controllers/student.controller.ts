@@ -54,7 +54,7 @@ export const getStudents = async (req: Request, res: Response, next: NextFunctio
         where: whereCondition,
         include: { courses: true },
         skip: skip, // PostgreSQL OFFSET
-        take: limitNum, // PostgreSQL LIMIT
+        take: limitNum, 
         orderBy: {
           [String(sortBy)]: sortOrder,
         },
