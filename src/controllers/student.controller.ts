@@ -53,7 +53,7 @@ export const getStudents = async (req: Request, res: Response, next: NextFunctio
       prisma.student.findMany({
         where: whereCondition,
         include: { courses: true },
-        skip: skip, // PostgreSQL OFFSET
+        skip: skip, 
         take: limitNum, 
         orderBy: {
           [String(sortBy)]: sortOrder,
