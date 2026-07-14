@@ -48,7 +48,6 @@ export const getStudents = async (req: Request, res: Response, next: NextFunctio
       }
       : {};
 
-    // Do queries ek sath parallelly run karenge Performance badhane ke liye
     const [students, totalCount] = await Promise.all([
       prisma.student.findMany({
         where: whereCondition,
