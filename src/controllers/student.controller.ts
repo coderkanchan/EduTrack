@@ -38,7 +38,6 @@ export const getStudents = async (req: Request, res: Response, next: NextFunctio
     const limitNum = Number(limit);
     const skip = (pageNum - 1) * limitNum; // PostgreSQL offset calculate karne ke liye formula
 
-    // Dynamic Filter condition banayenge search ke liye
     const whereCondition = search
       ? {
         OR: [
