@@ -45,7 +45,6 @@ export const getAllStudents = async (req: Request, res: Response, next: NextFunc
         }
       : {};
 
-    // Strict dynamic sorting object creation
     const validSortFields = ['name', 'age', 'enrolled_at'];
     const sortField = validSortFields.includes(String(sortBy)) ? String(sortBy) : 'enrolled_at';
 
