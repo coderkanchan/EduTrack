@@ -31,7 +31,6 @@ export const createStudent = async (req: Request, res: Response, next: NextFunct
 // 2. GET ALL STUDENTS (WITH SEARCH, PAGINATION & SORTING)
 export const getStudents = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
-    // Query params se values nikalenge
     const { search, page = '1', limit = '10', sortBy = 'enrolled_at', sortOrder = 'desc' } = req.query;
 
     const pageNum = Number(page);
