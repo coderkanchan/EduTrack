@@ -28,18 +28,18 @@ export const createStudent = async (req: Request, res: Response, next: NextFunct
   }
 };
 
-export const getStudents = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+export const getAllStudents = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
     const { search, page = '1', limit = '10', sortBy = 'enrolled_at', sortOrder = 'desc' } = req.query;
 
     const pageNum = Number(page);
     const limitNum = Number(limit);
-    const skip = (pageNum - 1) * limitNum; 
+    const skip = (pageNum - 1) * limitNum;
 
     const whereCondition = search
       ? {
         OR: [
-          { name: { contains: String(search), mode: 'insensitive' as const } }, 
+          { name: { contains: String(search), mode: 'insensitive' as const } },
           { email: { contains: String(search), mode: 'insensitive' as const } },
         ],
       }
@@ -49,13 +49,13 @@ export const getStudents = async (req: Request, res: Response, next: NextFunctio
       prisma.student.findMany({
         where: whereCondition,
         include: { courses: true },
-        skip: skip, 
-        take: limitNum, 
+        skip: skip,
+        take: limitNum,
         orderBy: {
           [String(sortBy)]: sortOrder,
         },
       }),
-      prisma.student.count({ where: whereCondition }), 
+      prisma.student.count({ where: whereCondition }),
     ]);
 
     const totalPages = Math.ceil(totalCount / limitNum);
