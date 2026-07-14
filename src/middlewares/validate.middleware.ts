@@ -28,7 +28,6 @@ export const validate = (schema: ZodSchema) =>
 
         return;
       }
-      
       next(error);
     }
   };
