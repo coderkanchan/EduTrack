@@ -41,7 +41,7 @@ export const getStudents = async (req: Request, res: Response, next: NextFunctio
     const whereCondition = search
       ? {
         OR: [
-          { name: { contains: String(search), mode: 'insensitive' as const } }, // PostgreSQL ILIKE
+          { name: { contains: String(search), mode: 'insensitive' as const } }, 
           { email: { contains: String(search), mode: 'insensitive' as const } },
         ],
       }
