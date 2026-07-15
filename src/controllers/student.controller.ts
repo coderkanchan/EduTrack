@@ -55,7 +55,7 @@ export const getAllStudents = async (req: Request, res: Response, next: NextFunc
         skip: skip,
         take: limitNum,
         orderBy: {
-          [sortField]: sortOrder as 'asc' | 'desc',
+          [sortField]: sortOrder as 'asc' | 'desc'
         },
       }),
       prisma.student.count({ where: whereCondition }),
