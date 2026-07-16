@@ -41,7 +41,7 @@ export const createStudent = async (req: Request, res: Response, next: NextFunct
     });
 
   } catch (error) {
-    next(error); // Error aane par zero changes commit honge database mein
+    next(error); 
   }
 };
 
