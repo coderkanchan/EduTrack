@@ -4,7 +4,6 @@ import prisma from '../config/prisma.js';
 export const createStudent = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
     const { name, email, age, phone, courses } = req.body;
-
     const result = await prisma.$transaction(async (tx) => {
 
       const newStudent = await tx.student.create({
