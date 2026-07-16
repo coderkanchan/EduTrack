@@ -28,7 +28,6 @@ export const createStudent = async (req: Request, res: Response, next: NextFunct
         );
         createdCourses = await Promise.all(coursePromises);
       }
-
       return { student: newStudent, courses: createdCourses };
     });
 
