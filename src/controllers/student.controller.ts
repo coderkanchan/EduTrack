@@ -36,7 +36,6 @@ export const createStudent = async (req: Request, res: Response, next: NextFunct
       message: "Student and courses securely created within a safe transaction block!",
       data: result,
     });
-
   } catch (error) {
     next(error); 
   }
