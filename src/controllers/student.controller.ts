@@ -5,7 +5,6 @@ export const createStudent = async (req: Request, res: Response, next: NextFunct
   try {
     const { name, email, age, phone, courses } = req.body;
 
-    // Prisma Transaction block shuru
     // Agar is array ke andar ka ek bhi database write fail hua, toh saara data automatic roll-back ho jayega!
     const result = await prisma.$transaction(async (tx) => {
 
