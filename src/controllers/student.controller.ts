@@ -25,7 +25,7 @@ export const createStudent = async (req: Request, res: Response, next: NextFunct
               title: course.title,
               description: course.description,
               credits: course.credits,
-              studentId: newStudent.id, // Parent database ID linked here
+              studentId: newStudent.id, 
             },
           })
         );
