@@ -31,7 +31,6 @@ export const createStudent = async (req: Request, res: Response, next: NextFunct
         createdCourses = await Promise.all(coursePromises);
       }
 
-      // Dono ka secure single response object return karein
       return { student: newStudent, courses: createdCourses };
     });
 
