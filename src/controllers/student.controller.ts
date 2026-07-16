@@ -4,27 +4,50 @@ import prisma from '../config/prisma.js';
 export const createStudent = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
     const { name, email, age, phone, courses } = req.body;
-    const newStudent = await prisma.student.create({
-      data: {
-        name,
-        email,
-        age: Number(age),
-        phone,
-        courses: {
-          create: courses
-        }
-      },
-      include: {
-        courses: true
+
+    // Prisma Transaction block shuru
+    // Agar is array ke andar ka ek bhi database write fail hua, toh saara data automatic roll-back ho jayega!
+    const result = await prisma.$transaction(async (tx) => {
+
+      // 1. Student create karein (using transactional client 'tx')
+      const newStudent = await tx.student.create({
+        data: {
+          name,
+          email,
+          age,
+          phone,
+        },
+      });
+
+      // 2. Agar user ne courses diye hain, toh unhe isi transaction ke andar child rows banayein
+      let createdCourses = [];
+      if (courses && courses.length > 0) {
+        // Har course ko link karke create karein
+        const coursePromises = courses.map((course: any) =>
+          tx.course.create({
+            data: {
+              title: course.title,
+              description: course.description,
+              credits: course.credits,
+              studentId: newStudent.id, // Parent database ID linked here
+            },
+          })
+        );
+        createdCourses = await Promise.all(coursePromises);
       }
+
+      // Dono ka secure single response object return karein
+      return { student: newStudent, courses: createdCourses };
     });
+
     res.status(201).json({
       success: true,
-      message: "Student and enrolled courses created successfully!",
-      data: newStudent
+      message: "Student and courses securely created within a safe transaction block!",
+      data: result,
     });
+
   } catch (error) {
-    next(error);
+    next(error); // Error aane par zero changes commit honge database mein
   }
 };
 
@@ -38,15 +61,15 @@ export const getAllStudents = async (req: Request, res: Response, next: NextFunc
 
     const whereCondition = search
       ? {
-          OR: [
-            { name: { contains: String(search), mode: 'insensitive' as const } },
-            { email: { contains: String(search), mode: 'insensitive' as const } },
-          ],
-        }
+        OR: [
+          { name: { contains: String(search), mode: 'insensitive' as const } },
+          { email: { contains: String(search), mode: 'insensitive' as const } },
+        ],
+      }
       : {};
 
     const validSortFields = ['name', 'age', 'enrolled_at'];
-    
+
     const sortField = validSortFields.includes(String(sortBy)) ? String(sortBy) : 'enrolled_at';
 
     const [students, totalCount] = await Promise.all([
