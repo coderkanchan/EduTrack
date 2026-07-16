@@ -7,7 +7,6 @@ export const createStudent = async (req: Request, res: Response, next: NextFunct
 
     const result = await prisma.$transaction(async (tx) => {
 
-      // 1. Student create karein (using transactional client 'tx')
       const newStudent = await tx.student.create({
         data: {
           name,
