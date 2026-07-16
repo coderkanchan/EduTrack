@@ -16,7 +16,7 @@ export const createStudent = async (req: Request, res: Response, next: NextFunct
         },
       });
 
-      // 2. Agar user ne courses diye hain, toh unhe isi transaction ke andar child rows banayein
+     
       let createdCourses = [];
       if (courses && courses.length > 0) {
         // Har course ko link karke create karein
