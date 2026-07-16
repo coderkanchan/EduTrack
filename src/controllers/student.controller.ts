@@ -18,7 +18,7 @@ export const createStudent = async (req: Request, res: Response, next: NextFunct
 
       let createdCourses = [];
       if (courses && courses.length > 0) {
-        // Har course ko link karke create karein
+        
         const coursePromises = courses.map((course: any) =>
           tx.course.create({
             data: {
