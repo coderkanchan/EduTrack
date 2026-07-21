@@ -4,6 +4,7 @@ import prisma from '../config/prisma.js';
 export const createStudent = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
     const { name, email, age, phone, courses } = req.body;
+    
     const result = await prisma.$transaction(async (tx) => {
       const newStudent = await tx.student.create({
         data: {
@@ -59,7 +60,7 @@ export const getAllStudents = async (req: Request, res: Response, next: NextFunc
       : {};
 
     const validSortFields = ['name', 'age', 'enrolled_at'];
-    
+
     const sortField = validSortFields.includes(String(sortBy)) ? String(sortBy) : 'enrolled_at';
 
     const [students, totalCount] = await Promise.all([
