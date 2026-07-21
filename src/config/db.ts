@@ -21,7 +21,8 @@ pool.connect((err) => {
     } else {
         console.log('✅ PostgreSQL Database Connected Successfully!');
     }
-    
+
 });
+
 
 export default pool;
