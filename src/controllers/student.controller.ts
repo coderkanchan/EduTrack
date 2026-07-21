@@ -99,6 +99,7 @@ export const getAllStudents = async (req: Request, res: Response, next: NextFunc
 export const updateStudent = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { id } = req.params;
+    
     const { name, email, age, phone } = req.body;
 
     const updatedStudent = await prisma.student.update({
@@ -138,7 +139,7 @@ export const deleteStudent = async (req: Request, res: Response, next: NextFunct
       success: true,
       message: "Student and all their associated courses deleted successfully!"
     });
-    
+
   } catch (error) {
     next(error);
   }
