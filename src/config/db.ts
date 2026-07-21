@@ -14,6 +14,7 @@ const pool = new Pool({
 });
 
 pool.connect((err) => {
+    
     if (err) {
         console.error('❌ Error connecting to PostgreSQL:', err.stack);
     } else {
