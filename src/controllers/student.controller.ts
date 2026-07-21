@@ -99,7 +99,7 @@ export const getAllStudents = async (req: Request, res: Response, next: NextFunc
 export const updateStudent = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { id } = req.params;
-    
+
     const { name, email, age, phone } = req.body;
 
     const updatedStudent = await prisma.student.update({
@@ -113,6 +113,7 @@ export const updateStudent = async (req: Request, res: Response, next: NextFunct
     });
 
     res.json(updatedStudent);
+    
   } catch (err) {
     next(err);
   }
