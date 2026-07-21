@@ -4,7 +4,7 @@ import prisma from '../config/prisma.js';
 export const createStudent = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
     const { name, email, age, phone, courses } = req.body;
-    
+
     const result = await prisma.$transaction(async (tx) => {
       const newStudent = await tx.student.create({
         data: {
@@ -37,6 +37,7 @@ export const createStudent = async (req: Request, res: Response, next: NextFunct
       message: "Student and courses securely created within a safe transaction block!",
       data: result,
     });
+    
   } catch (error) {
     next(error); 
   }
