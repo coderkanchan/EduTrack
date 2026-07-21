@@ -37,7 +37,7 @@ export const createStudent = async (req: Request, res: Response, next: NextFunct
       message: "Student and courses securely created within a safe transaction block!",
       data: result,
     });
-    
+
   } catch (error) {
     next(error); 
   }
@@ -45,6 +45,7 @@ export const createStudent = async (req: Request, res: Response, next: NextFunct
 
 export const getAllStudents = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
+    
     const { search, page = '1', limit = '10', sortBy = 'enrolled_at', sortOrder = 'desc' } = req.query;
 
     const pageNum = Number(page);
