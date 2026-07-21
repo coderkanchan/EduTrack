@@ -24,5 +24,4 @@ pool.connect((err) => {
 
 });
 
-
 export default pool;
