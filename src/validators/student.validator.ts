@@ -27,6 +27,7 @@ export const createStudentSchema = z.object({
 });
 
 export const getStudentsQuerySchema = z.object({
+  
   query: z.object({
     search: z.string().optional(),
     page: z.string().optional(),
