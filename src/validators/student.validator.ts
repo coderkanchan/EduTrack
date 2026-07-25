@@ -34,5 +34,4 @@ export const getStudentsQuerySchema = z.object({
     sortBy: z.enum(['name', 'age', 'enrolled_at']).optional(),
     sortOrder: z.enum(['asc', 'desc']).optional(),
   }),
-
 });
