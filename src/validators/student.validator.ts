@@ -12,7 +12,6 @@ export const createStudentSchema = z.object({
     age: z.number()
       .min(15, "Age must be at least 15")
       .max(100, "Age cannot exceed 100"),
-
     phone: z.string().optional(),
     courses: z.array(
       z.object({
