@@ -6,7 +6,6 @@ export const createStudentSchema = z.object({
     name: z.string()
       .min(1, "Name is required")
       .min(2, "Name must be at least 2 characters long"),
-
     email: z.string()
       .min(1, "Email is required")
       .email("Invalid email format"),
