@@ -27,7 +27,6 @@ export const createStudentSchema = z.object({
 });
 
 export const getStudentsQuerySchema = z.object({
-
   query: z.object({
     search: z.string().optional(),
     page: z.string().optional(),
@@ -35,5 +34,5 @@ export const getStudentsQuerySchema = z.object({
     sortBy: z.enum(['name', 'age', 'enrolled_at']).optional(),
     sortOrder: z.enum(['asc', 'desc']).optional(),
   }),
-  
+
 });
