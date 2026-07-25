@@ -14,7 +14,6 @@ export const createStudentSchema = z.object({
       .max(100, "Age cannot exceed 100"),
 
     phone: z.string().optional(),
-
     courses: z.array(
       z.object({
         title: z.string().min(3, "Course title must be at least 3 characters"),
