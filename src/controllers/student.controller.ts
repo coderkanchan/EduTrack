@@ -62,7 +62,6 @@ export const getAllStudents = async (req: Request, res: Response, next: NextFunc
       : {};
 
     const validSortFields = ['name', 'age', 'enrolled_at'];
-
     const sortField = validSortFields.includes(String(sortBy)) ? String(sortBy) : 'enrolled_at';
 
     const [students, totalCount] = await Promise.all([
@@ -90,7 +89,6 @@ export const getAllStudents = async (req: Request, res: Response, next: NextFunc
       },
       data: students,
     });
-
   } catch (error) {
     next(error);
   }
