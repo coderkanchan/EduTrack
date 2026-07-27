@@ -23,7 +23,6 @@ export const createStudentSchema = z.object({
       })
     ).min(1, "At least one course must be provided"),
   }),
-  
 });
 
 export const getStudentsQuerySchema = z.object({
