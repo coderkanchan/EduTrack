@@ -132,7 +132,6 @@ export const deleteStudent = async (req: Request, res: Response, next: NextFunct
     await prisma.student.delete({
       where: { id: Number(id) }
     });
-
     res.status(200).json({
       success: true,
       message: "Student and all their associated courses deleted successfully!"
