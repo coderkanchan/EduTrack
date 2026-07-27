@@ -120,7 +120,6 @@ export const updateStudent = async (req: Request, res: Response, next: NextFunct
 export const deleteStudent = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
     const { id } = req.params;
-
     const studentExists = await prisma.student.findUnique({
       where: { id: Number(id) }
     });
