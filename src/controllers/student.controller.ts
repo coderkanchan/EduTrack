@@ -128,7 +128,6 @@ export const deleteStudent = async (req: Request, res: Response, next: NextFunct
       res.status(404).json({ success: false, message: "Student not found" });
       return;
     }
-
     await prisma.student.delete({
       where: { id: Number(id) }
     });
