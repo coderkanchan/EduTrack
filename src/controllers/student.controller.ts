@@ -167,7 +167,6 @@ export const getStudentProfileWithStats = async (req: Request, res: Response, ne
         id: true
       }
     });
-
     res.status(200).json({
       success: true,
       data: {
