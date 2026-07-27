@@ -45,7 +45,6 @@ export const createStudent = async (req: Request, res: Response, next: NextFunct
 
 export const getAllStudents = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
-
     const { search, page = '1', limit = '10', sortBy = 'enrolled_at', sortOrder = 'desc' } = req.query;
 
     const pageNum = Number(page);
