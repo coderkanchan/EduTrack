@@ -20,7 +20,6 @@ export const validate = (schema: ZodSchema) =>
             message: err.message,
           };
         });
-
         res.status(400).json({
           success: false,
           errors: errorMessages,
