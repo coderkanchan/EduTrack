@@ -137,7 +137,6 @@ export const deleteStudent = async (req: Request, res: Response, next: NextFunct
       success: true,
       message: "Student and all their associated courses deleted successfully!"
     });
-
   } catch (error) {
     next(error);
   }
@@ -167,6 +166,7 @@ export const getStudentProfileWithStats = async (req: Request, res: Response, ne
         id: true
       }
     });
+
     res.status(200).json({
       success: true,
       data: {
