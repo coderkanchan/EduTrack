@@ -30,7 +30,6 @@ export const createStudent = async (req: Request, res: Response, next: NextFunct
       }
       return { student: newStudent, courses: createdCourses };
     });
-
     res.status(201).json({
       success: true,
       message: "Student and courses securely created within a safe transaction block!",
