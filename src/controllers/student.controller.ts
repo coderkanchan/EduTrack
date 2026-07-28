@@ -46,7 +46,6 @@ export const getAllStudents = async (req: Request, res: Response, next: NextFunc
     const pageNum = Number(page);
     const limitNum = Number(limit);
     const skip = (pageNum - 1) * limitNum;
-
     const whereCondition = search
       ? {
         OR: [
