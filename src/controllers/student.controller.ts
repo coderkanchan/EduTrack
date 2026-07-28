@@ -112,7 +112,6 @@ export const deleteStudent = async (req: Request, res: Response, next: NextFunct
     const studentExists = await prisma.student.findUnique({
       where: { id: Number(id) }
     });
-
     if (!studentExists) {
       res.status(404).json({ success: false, message: "Student not found" });
       return;
