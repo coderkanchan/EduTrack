@@ -72,7 +72,6 @@ export const getAllStudents = async (req: Request, res: Response, next: NextFunc
     ]);
 
     const totalPages = Math.ceil(totalCount / limitNum);
-
     res.status(200).json({
       success: true,
       meta: {
