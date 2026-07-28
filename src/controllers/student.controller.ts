@@ -143,7 +143,6 @@ export const getStudentProfileWithStats = async (req: Request, res: Response, ne
       res.status(404).json({ success: false, message: "Student not found" });
       return;
     }
-
     const stats = await prisma.course.aggregate({
       where: { studentId: Number(id) },
       _sum: {
