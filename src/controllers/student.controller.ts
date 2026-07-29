@@ -91,7 +91,7 @@ export const updateStudent = async (req: Request, res: Response, next: NextFunct
   try {
     const { id } = req.params;
     const { name, email, age, phone } = req.body;
-    
+
     const updatedStudent = await prisma.student.update({
       where: { id: Number(id) },
       data: {
@@ -101,6 +101,7 @@ export const updateStudent = async (req: Request, res: Response, next: NextFunct
         phone: phone ?? undefined
       }
     });
+    
     res.json(updatedStudent);
   } catch (err) {
     next(err);
