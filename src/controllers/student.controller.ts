@@ -101,7 +101,7 @@ export const updateStudent = async (req: Request, res: Response, next: NextFunct
         phone: phone ?? undefined
       }
     });
-
+ 
     res.json(updatedStudent);
   } catch (err) {
     next(err);
