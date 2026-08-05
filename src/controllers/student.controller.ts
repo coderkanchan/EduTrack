@@ -129,7 +129,7 @@ export const deleteStudent = async (req: Request, res: Response, next: NextFunct
     next(error);
   }
 };
-   
+  
 export const getStudentProfileWithStats = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
     const { id } = req.params;
