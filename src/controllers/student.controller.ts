@@ -107,7 +107,7 @@ export const updateStudent = async (req: Request, res: Response, next: NextFunct
     next(err);
   }
 };
-
+ 
 export const deleteStudent = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
     const { id } = req.params;
