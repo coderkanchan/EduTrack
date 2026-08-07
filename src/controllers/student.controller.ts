@@ -130,7 +130,6 @@ export const deleteStudent = async (req: Request, res: Response, next: NextFunct
   }
 };
 
-
 export const getStudentProfileWithStats = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
     const { id } = req.params;
